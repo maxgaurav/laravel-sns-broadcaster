@@ -23,100 +23,60 @@ composer require maxgaurav/laravel-sns-sqs-queue
 The package will automatically register its service provider.
 
 ## Configuration
+
+### Driver setup
+In **.env** use the broadcasting driver
+```
+BROADCAST_DRIVER=sns
+
+```
+
+### Environment Setup
+```
+
+```
+
+### Broadcaster Configuration Setup
 In **queue.php** add the following driver setup
 
 ```php
 return [
-    //...
 
-    'sqs' => [
-        'driver' => 'sqs',
-        'key' => env('AWS_ACCESS_KEY_ID'),
-        'secret' => env('AWS_SECRET_ACCESS_KEY'),
-        'prefix' => env('SQS_PREFIX', 'https://sqs.us-east-1.amazonaws.com/your-account-id'),
-        'queue' => env('SQS_QUEUE', 'your-queue-name'),
-        'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+    'null' => [
+        'driver' => 'null',
      ],
 
-    'sns-sqs' => [
-        'driver' => 'sns-sqs',
+    'sns' => [
+        'driver' => 'sns',
+        'region' => env('AWS_DEFAULT_REGION'),
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
-        'prefix' => env('SQS_PREFIX', 'https://sqs.us-east-1.amazonaws.com/your-account-id'),
-        'queue' => env('SQS_QUEUE', 'your-queue-name'),
-        'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
-        'sns-config' => [
-            'topics' => [
-                'topicName' => \App\Jobs\YourJob::class,
-                'topic2Name' => \App\Jobs\YourOtherJob::class
-                //...
-            ],
-            'default-job' => '', // if you want to override the default job executed for non matching topics
-            'prefix' => env('SNS_PREFIX', ''), // SNS Topic Prefix
-        ],
+        'suffix' => env('TOPIC_SUFFIX', '-dev'),
+        'arn-prefix' => env('TOPIC_ARN_PREFIX', 'arn:aws:sns:us-east-2:123345666:') 
+    
     ],
+];
 
 ```
 
-## Prerequisites
 
-* First setup your SQS queue in AWS
-* The SQS must be subscribed to all the topics of SNS you want to process through your job.
+## Event setup
 
-## Usage
-Each job created must have two constructor inputs. First input is for the topic name the job is executing for and second is the array of json decoded data sent in the message.
-
+In your events implement the **ShouldBroadcast** interface. And set the topic name to be return through **broadcastOn** method.
 
 ```php
 
-class SampleJob {
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    /**
-     * @var string
-     */
-    public $topic;
+class SampleEvent implements ShouldBroadcast
+{
 
     /**
-     * @var array
+     * @inheritDoc
      */
-    public $body;
-
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct($topic, $body)
+    public function broadcastOn()
     {
-        $this->topic = $topic;
-        $this->body = $body;
+        return "you topic";
     }
-
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
-    public function handle()
-    {
-        // do your handling
-    }
-
 }
-
 ```
-
-## Default Job
-The package uses a default job instance **\MaxGaurav\LaravelSnsSqsQueue\DefaultJob** for topics not mapped in the
-configuration. The job has a default functionality to fail for such topics. This is done to allow the application
-to tell that topics are not mapped.
-
-The DefaultJob class can be replaced with a custom default job handler using key **default-job**. Pass your class instance and it would be used instead. 
-
-
-## Normal Jobs
-The package can also be used to push normal jobs to SQS queue as done using sqs driver. The queue would check if the
-job is a sns job then would map to topic name and would call the mapped jobs otherwise would fallback to default SQS
-driver behavior.
