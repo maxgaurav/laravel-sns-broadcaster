@@ -21,17 +21,17 @@ class LaravelSnsBroadcastProvider extends ServiceProvider
         $this->app->make(BroadcastManager::class)->extend('sns', function ($app, $config) {
             $client = new SnsClient([
                 'version' => '2010-03-31',
-                'region' => $config['config']['region'],
+                'region' => $config['region'],
                 'credentials' => new Credentials(
-                    $config['config']['key'],
-                    $config['config']['secret']
+                    $config['key'],
+                    $config['secret']
                 )
             ]);
 
             return new SnsBroadcaster(
                 $client,
-                $config['config']['arn-prefix'],
-                $config['config']['suffix']
+                $config['arn-prefix'],
+                $config['suffix']
             );
         });
     }
