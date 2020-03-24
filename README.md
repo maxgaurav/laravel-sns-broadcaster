@@ -33,6 +33,7 @@ BROADCAST_DRIVER=sns
 
 ### Environment Setup
 ```
+TOPIC_SUFFIX=-dev #blank used if you are trying to deploy base
 
 ```
 
@@ -52,7 +53,7 @@ return [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'suffix' => env('TOPIC_SUFFIX', '-dev'),
-        'arn-prefix' => env('TOPIC_ARN_PREFIX', 'arn:aws:sns:us-east-2:123345666:') 
+        'arn-prefix' => env('TOPIC_ARN_PREFIX', 'arn:aws:sns:us-east-2:123345666:') // note the arn prefix contains colon
     
     ],
 ];
@@ -76,7 +77,7 @@ class SampleEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return "you topic";
+        return "you topic"; // the topic without the prefix and suffix. Example user-created. If -dev is suffix then it will automatically appended
     }
 }
 ```
