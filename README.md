@@ -38,7 +38,7 @@ TOPIC_SUFFIX=-dev #blank used if you are trying to deploy base
 ```
 
 ### Broadcaster Configuration Setup
-In **queue.php** add the following driver setup
+In **broadcasting.php** add the following driver setup
 
 ```php
 return [
