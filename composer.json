@@ -1,9 +1,9 @@
 {
-    "name": "maxgaurav/laravel-sns-sqs-queue",
+    "name": "maxgaurav/laravel-sns-broadcaster",
     "description": "Sns Messages as queues using extended laravel sqs driver.",
     "type": "library",
     "license": "MIT",
-    "homepage": "https://github.com/maxgaurav/laravel-sqs-sns",
+    "homepage": "https://github.com/maxgaurav/laravel-sns-broadcaster",
     "authors": [
         {
             "name": "Max Gaurav",
