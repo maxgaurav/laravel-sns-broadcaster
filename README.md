@@ -1,6 +1,11 @@
 # Broadcast Events as SNS Topic
 
-The package allows you to broad laravel events as sns topic.
+[![Packagist](https://badgen.net/packagist/v/maxgaurav/laravel-sns-broadcaster)](https://packagist.org/packages/maxgaurav/laravel-sns-broadcaster)
+[![GitHub tag](https://badgen.net/github/tag/maxgaurav/laravel-sns-broadcaster)](https://github.com/maxgaurav/laravel-sns-broadcaster/releases)
+[![License](https://badgen.net/packagist/license/maxgaurav/laravel-sns-broadcaster)](LICENSE.txt)
+[![Downloads](https://badgen.net/packagist/dt/maxgaurav/laravel-sns-broadcaster)](https://packagist.org/packages/maxgaurav/laravel-sns-broadcaster/stats)
+
+The package allows you to broadcast laravel events as sns topic.
 
 The queue also processes standard jobs pushed via laravel.
 
@@ -25,20 +30,18 @@ The package will automatically register its service provider.
 ## Configuration
 
 ### Driver setup
-In **.env** use the broadcasting driver
+Update your **.env** use the broadcasting driver
 ```
 BROADCAST_DRIVER=sns
-
 ```
 
 ### Environment Setup
 ```
-TOPIC_SUFFIX=-dev #blank used if you are trying to deploy base
-
+TOPIC_SUFFIX=-dev #leave it blank, if you are trying to deploy base
 ```
 
 ### Broadcaster Configuration Setup
-In **broadcasting.php** add the following driver setup
+In **config/broadcasting.php** add the following driver setup
 
 ```php
 return [
@@ -63,7 +66,7 @@ return [
 
 ## Event setup
 
-In your events implement the **ShouldBroadcast** interface. And set the topic name to be return through **broadcastOn** method.
+In your events implement the **ShouldBroadcast** interface. Then set the topic name to be return through **broadcastOn** method.
 
 ```php
 
@@ -77,7 +80,10 @@ class SampleEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return "you topic"; // the topic without the prefix and suffix. Example user-created. If -dev is suffix then it will automatically appended
+        return "you-topic-name"; // the topic without the prefix and suffix. Example user-created. If -dev is suffix then it will automatically appended
     }
 }
 ```
+
+## License
+The [MIT](https://opensource.org/licenses/MIT) License.

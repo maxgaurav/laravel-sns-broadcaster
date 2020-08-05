@@ -26,9 +26,9 @@ class SnsBroadcaster implements Broadcaster
     /**
      * SnsBroadcaster constructor.
      *
-     * @param SnsClient $client
-     * @param string $topicArn
-     * @param string $suffix
+     * @param  SnsClient  $client
+     * @param  string  $topicArn
+     * @param  string  $suffix
      */
     public function __construct(SnsClient $client, string $topicArn, string $suffix)
     {
@@ -67,11 +67,12 @@ class SnsBroadcaster implements Broadcaster
     /**
      * Returns topic name built for sns
      *
-     * @param array $channels
+     * @param  array  $channels
+     *
      * @return string
      */
     private function topicName(array $channels): string
     {
-        return $this->topicArn . Arr::first($channels) . $this->suffix;
+        return $this->topicArn.Arr::first($channels).$this->suffix;
     }
 }

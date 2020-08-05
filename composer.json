@@ -1,45 +1,46 @@
 {
-    "name": "maxgaurav/laravel-sns-broadcaster",
-    "description": "Sns Messages as queues using extended laravel sqs driver.",
-    "type": "library",
-    "license": "MIT",
-    "homepage": "https://github.com/maxgaurav/laravel-sns-broadcaster",
-    "authors": [
-        {
-            "name": "Max Gaurav",
-            "email": "max.gaurav@ithands.net"
-        }
-    ],
-    "keywords": [
-        "sns",
-        "laravel",
-        "broadcasting",
-        "aws"
-    ],
-    "require": {
-        "php" : "^7.2",
-        "illuminate/broadcasting": "6.* || 7.*",
-        "illuminate/support": "6.* || 7.*",
-        "illuminate/contracts": "6.* || 7.*",
-        "illuminate/config": "6.* || 7.*",
-        "aws/aws-sdk-php": "^3.62",
-        "ext-json": "*"
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "MaxGaurav\\LaravelSnsBroadcaster\\LaravelSnsBroadcastProvider"
-            ]
-        }
-    },
-    "autoload": {
-        "psr-4": {
-            "MaxGaurav\\LaravelSnsBroadcaster\\": "src"
-        }
-    },
-     "minimum-stability": "dev",
-    "prefer-stable": true
+  "name": "maxgaurav/laravel-sns-broadcaster",
+  "description": "Sns Messages as queues using extended laravel sqs driver.",
+  "type": "library",
+  "license": "MIT",
+  "homepage": "https://github.com/maxgaurav/laravel-sns-broadcaster",
+  "authors": [
+    {
+      "name": "Max Gaurav",
+      "email": "max.gaurav@ithands.net"
+    }
+  ],
+  "keywords": [
+    "sns",
+    "laravel",
+    "broadcasting",
+    "aws"
+  ],
+  "require": {
+    "php": "^7.2",
+    "ext-json": "*",
+    "illuminate/broadcasting": "6.* || 7.*",
+    "illuminate/support": "6.* || 7.*",
+    "illuminate/contracts": "6.* || 7.*",
+    "illuminate/config": "6.* || 7.*",
+    "aws/aws-sdk-php": "^3.62"
+  },
+  "config": {
+    "sort-packages": true,
+    "preferred-install": "dist"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "MaxGaurav\\LaravelSnsBroadcaster\\LaravelSnsBroadcastProvider"
+      ]
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "MaxGaurav\\LaravelSnsBroadcaster\\": "src"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

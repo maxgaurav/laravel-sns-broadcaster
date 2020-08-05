@@ -5,7 +5,6 @@ namespace MaxGaurav\LaravelSnsBroadcaster;
 use Aws\Credentials\Credentials;
 use Aws\Sns\SnsClient;
 use Illuminate\Broadcasting\BroadcastManager;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelSnsBroadcastProvider extends ServiceProvider
@@ -25,7 +24,7 @@ class LaravelSnsBroadcastProvider extends ServiceProvider
                 'credentials' => new Credentials(
                     $config['key'],
                     $config['secret']
-                )
+                ),
             ]);
 
             return new SnsBroadcaster(
