@@ -2,9 +2,9 @@
 
 namespace MaxGaurav\LaravelSnsBroadcaster;
 
-use Aws\Credentials\Credentials;
 use Aws\Sns\SnsClient;
 use Illuminate\Broadcasting\BroadcastManager;
+use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelSnsBroadcastProvider extends ServiceProvider
@@ -18,14 +18,7 @@ class LaravelSnsBroadcastProvider extends ServiceProvider
     public function boot()
     {
         $this->app->make(BroadcastManager::class)->extend('sns', function ($app, $config) {
-            $client = new SnsClient([
-                'version' => '2010-03-31',
-                'region' => $config['region'],
-                'credentials' => new Credentials(
-                    $config['key'],
-                    $config['secret']
-                ),
-            ]);
+            $client = new SnsClient($this->getSnsClientConfig($config));
 
             return new SnsBroadcaster(
                 $client,
@@ -33,5 +26,21 @@ class LaravelSnsBroadcastProvider extends ServiceProvider
                 $config['suffix']
             );
         });
+    }
+
+    public function getSnsClientConfig($config)
+    {
+        $snsConfig = [
+            'region' => $config['region'],
+            'version' => 'latest',
+        ];
+
+        if (!empty($config['key']) && !empty($config['secret'])) {
+            $snsConfig['credentials'] = Arr::only(
+                $config, ['key', 'secret', 'token']
+            );
+        }
+
+        return $snsConfig;
     }
 }
