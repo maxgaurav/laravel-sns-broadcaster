@@ -22,7 +22,7 @@ This package is a great use cases for applications beings deployed to microservi
 
 Install using composer
 ```sh
-composer require maxgaurav/laravel-sns-sqs-queue
+composer require maxgaurav/laravel-sns-broadcaster
 ```
 
 The package will automatically register its service provider.
