@@ -44,6 +44,7 @@ class SnsBroadcaster implements Broadcaster
     {
         $this->snsClient->publish([
             'TopicArn' => $this->topicName($channels),
+            'Subject' => $event,
             'Message' => json_encode(Arr::except($payload, 'socket')),
         ]);
     }
