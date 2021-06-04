@@ -41,6 +41,10 @@ class LaravelSnsBroadcastProvider extends ServiceProvider
             );
         }
 
+        if(!empty($config['options']) && is_array($config['options'])) {
+            $snsConfig = array_merge($snsConfig, $config['options']);
+        }
+
         return $snsConfig;
     }
 }
